@@ -4,7 +4,8 @@
   "description": "bounds cities and towns for turkey coordinates for gmaps, kml",
   "main": "index.js",
   "scripts": {
-    "build-towns": "node commands/build.js"
+    "build-towns": "node commands/build.js",
+    "setup": "node commands/setup.js"
   },
   "repository": {
     "type": "git",

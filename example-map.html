@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-US">
+ <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>::Maps ::</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyD0X4v7eqMFcWCR-VZAJwEMfb47id9IZao"></script>
+	<script >
+
+
+        $.get( "http://map.menkule.com.tr/34/421", function( data ) {
+            var map;
+            var newarkcoords = [];
+            var polygons = [];
+
+            if(data.multi_coords) {
+                data.coordinates.forEach(c => {
+                    var subcord = [];
+                    c.forEach(x => {
+                        subcord.push(new google.maps.LatLng(x.lat, x.lon));
+                    });
+                	polygons.push(
+                        new google.maps.Polygon({
+                            paths: [
+                                subcord,
+                                [
+                                    new google.maps.LatLng(85, 180),
+                                    new google.maps.LatLng(85, 90),
+                                    new google.maps.LatLng(85, 0),
+                                    new google.maps.LatLng(85,-90),
+                                    new google.maps.LatLng(85,-180),
+                                    new google.maps.LatLng(0,-180),
+                                    new google.maps.LatLng(-85,-180),
+                                    new google.maps.LatLng(-85,-90),
+                                    new google.maps.LatLng(-85,0),
+                                    new google.maps.LatLng(-85,90),
+                                    new google.maps.LatLng(-85,180),
+                                    new google.maps.LatLng(0,180),
+                                    new google.maps.LatLng(85,180)
+                                ]
+							],
+                            strokeColor: "#666",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: "#666",
+                            fillOpacity: 0.35
+                        })
+					);
+
+				});
+			} else {
+                data.coordinates.forEach(x => {
+                    newarkcoords.push(new google.maps.LatLng(x.lat, x.lon));
+                });
+                polygons.push(
+                    new google.maps.Polygon({
+                        paths: [
+                            newarkcoords,
+                            [
+                                new google.maps.LatLng(85, 180),
+                                new google.maps.LatLng(85, 90),
+                                new google.maps.LatLng(85, 0),
+                                new google.maps.LatLng(85,-90),
+                                new google.maps.LatLng(85,-180),
+                                new google.maps.LatLng(0,-180),
+                                new google.maps.LatLng(-85,-180),
+                                new google.maps.LatLng(-85,-90),
+                                new google.maps.LatLng(-85,0),
+                                new google.maps.LatLng(-85,90),
+                                new google.maps.LatLng(-85,180),
+                                new google.maps.LatLng(0,180),
+                                new google.maps.LatLng(85,180)
+                            ],
+						],
+                        strokeColor: "#666",
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: "#666",
+                        fillOpacity: 0.35
+                    })
+                );
+			}
+            var latlng = new google.maps.LatLng(40.988913, 27.452364);
+            var myOptions = {
+                zoom: 10,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            polygons[polygons.length - 1].setMap(map);
+
+        });
+
+	</script>
+	<style type="text/css">
+		html,body { height: 100%; margin: 0px; padding: 0px; }
+		#map_canvas {
+			width:1000px;
+			height:800px;
+		}		
+	</style>
+</head>
+<body >
+<div id="map_canvas">
+
+</div>
+<!--main-->
+<div id="map_cord"></div>
+</body>	
+</html>
