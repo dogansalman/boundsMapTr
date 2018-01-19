@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const jsonfile = require('jsonfile')
+const jsonfile = require('jsonfile');
+const fs = require('fs');
 
 app.get('/', (request,response) => {
     response.send('bounds services');
@@ -10,7 +11,7 @@ app.get('/', (request,response) => {
 app.get('/:locId', (request, response) => {
     response.set('Content-Type', 'application/json');
 
-    jsonfile.readFile('data/coords.json', (err,coords) => {
+    jsonfile.readFile('data/bounds/city.json', (err,coords) => {
         const _cord = coords.filter(c => c.id === Number(request.params.locId));
         if(_cord.length === 0) {
             response.statusCode = 404;  response.send({message: 'not found'});
