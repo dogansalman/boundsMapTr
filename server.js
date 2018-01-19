@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 1331;
 const jsonfile = require('jsonfile');
 const fs = require('fs');
 
