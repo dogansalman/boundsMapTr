@@ -1,5 +1,6 @@
 const jsonfile = require('jsonfile');
 const fs = require('fs');
+const rimraf = require('rimraf');
 
 // Database Source
 const town =  require('../data/src/towns');
@@ -33,13 +34,24 @@ function toEng(str){
     str = str_array.join('');
     return str.replace(/[çöşüğı]/gi, "").toLowerCase();
 }
+function removeBounds(){
+    return new Promise((resolve,reject) => {
+        rimraf('map-bounds/cities', function () {
+            console.log('cities deleted');
+            rimraf('map-bounds/towns', function () {
+                console.log('towns deleted');
+                resolve();
+            });
+        });
+    })
+}
 
 // Create Directory
 function createDir(_dir){
     const _dir_arr = _dir.split('/');
     let path = '';
     _dir_arr.forEach(d => {
-      path = path + d + '/'
+      path = path + d + '/';
       if (!fs.existsSync(path))  fs.mkdirSync(path);
     })
 
@@ -53,17 +65,15 @@ jsonfile.writeFile(path + '/' + filename + '.json' , data, function (err) {
 })
 }
 
+//clear city & town directories
+// removeBounds().then(() => {});
+
 /*
- Build cities bounds coordinates
+Build bounds coordinates Cities
 * */
 
-// create city dir
-createDir('map-bounds/cities');
-
-
-// cities temp array
-
 cities_coord.forEach(_cc => {
+
     const citySource =  cities.find(cs => toEng(cs.name) === toEng(_cc.name));
     if(!citySource) console.error(_cc.name + ' ' + _cc.id + ' cities not found');
     if(citySource) {
@@ -74,10 +84,46 @@ cities_coord.forEach(_cc => {
 
         //change property
         _cc.id = citySource.id;
-        Object.assign(_cc, {multi_coords: Array.isArray(_cc.coordinates) ? true : false});
+        Object.assign(_cc, {multi_coords: Array.isArray(_cc.coordinates)});
 
         //save city
         save(city_dir, _cc.id, _cc);
     }
 });
+
+
+
+/*
+ Build bounds coordinates Towns
+* */
+towns_coord.forEach(_t => {
+    const citySource =  cities.find(c => toEng(c.name) === toEng(_t.name));
+
+    _t.county.forEach(__t => {
+        const townSource =  town.find(t => toEng(t.name) === toEng(__t.name));
+        if(citySource && townSource) {
+
+            createDir('map-bounds/towns/' + townSource.id);
+
+            //create towns
+            const t_ = {
+                name: __t.name,
+                id: townSource.id,
+                coordinates: __t.cordinates.coordinates,
+                multi_coords: Array.isArray(__t.cordinates.coordinates)
+            };
+            //save city
+            save('map-bounds/towns/', t_.id, __t);
+
+        } else {
+            console.log(_t.name + ' / ' + _t.county.name + ' is not found!');
+        }
+    });
+
+
+});
+
+
+
+
 
