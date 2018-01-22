@@ -99,9 +99,13 @@ cities_coord.forEach(_cc => {
 towns_coord.forEach(_t => {
     const citySource =  cities.find(c => toEng(c.name) === toEng(_t.name));
 
-    _t.county.forEach(__t => {
+
+     _t.county.forEach(__t => {
         const townSource =  town.find(t => toEng(t.name) === toEng(__t.name));
-        if(citySource && townSource) {
+
+
+
+         if(citySource && townSource) {
 
             createDir('map-bounds/towns/' + townSource.id);
 
@@ -113,13 +117,14 @@ towns_coord.forEach(_t => {
                 multi_coords: Array.isArray(__t.cordinates.coordinates)
             };
             //save city
-            save('map-bounds/towns/', t_.id, __t);
+            save('map-bounds/towns/' + citySource.id, t_.id, __t);
 
         } else {
-            console.log(_t.name + ' / ' + _t.county.name + ' is not found!');
+            console.log(_t.name + ' / ' + __t.name + ' is not found!');
         }
-    });
 
+
+    });
 
 });
 
