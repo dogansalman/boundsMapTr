@@ -27,7 +27,11 @@ app.get('/:city_id/:town_id', (request, response) => {
     jsonfile.readFile('map-bounds/towns/' + request.params.city_id + '/' + request.params.town_id + '.json', (err,coords) => {
         if(err) {
             response.statusCode = 404;  response.send({message: 'not found'});
-        } else response.send(coords);
+        } else {
+           Object.assign(coords, {coordinates: coords.cordinates.coordinates,multi_coords: Array.isArray(coords.cordinates.coordinates[0])});
+           delete coords.cordinates;
+            response.send(coords);
+        }
     })
 });
 
