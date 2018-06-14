@@ -59,10 +59,9 @@ function createDir(_dir){
 
 // Save JSON
 function save(path, filename, data) {
-
-jsonfile.writeFile(path + '/' + filename + '.json' , data, function (err) {
-    if(err) console.log(path + '/' + filename + '.json' + ' is not saved');
-})
+  jsonfile.writeFile(path + '/' + filename + '.json' , data, function (err) {
+      if(err) console.log(path + '/' + filename + '.json' + ' is not saved');
+  })
 }
 
 //clear city & town directories
