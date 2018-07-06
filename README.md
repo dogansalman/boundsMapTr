@@ -1,5 +1,6 @@
 # boundsMapTr
-Sadece il ve ilçe sınırlarının koordinatları bulunmaktadır.
+Sadece il ve ilçe sınırlarının koordinatları bulunmaktadır. 
+Örnek için localhost:1331
 
     npm install
     npm run build-bound
