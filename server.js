@@ -9,9 +9,10 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use(express.static('/'))
 
 app.get('/', (request,response) => {
-    response.send('bounds services');
+   response.sendfile("index.html");
 });
 
 app.get('/:city_id', (request, response) => {

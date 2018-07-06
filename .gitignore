@@ -23,7 +23,7 @@ dist/
 node_modules/
 tmp/
 temp/
-.map-bounds/
+map-bounds/
 
 
 www/
