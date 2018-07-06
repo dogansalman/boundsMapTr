@@ -3,12 +3,12 @@
 
 > npm install > npm run build-bound > node server.js
 
-![alt text](https://preview.ibb.co/cqajj6/img.jpg "Tekirdağ")
+![alt text](https://image.ibb.co/hFojjy/img.jpg "Tekirdağ")
 
-## Şehir koordinatları için
+## İl Koordinatları
 
 localhost:1331/:city_id
 
-## İlçe koordinatları için
+## İlçe Koordinatları
 
 localhost:1331/:city_id/:town_id
